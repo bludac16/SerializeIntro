@@ -21,10 +21,10 @@ public class SaveTester {
         
         SchülerBL bl = new SchülerBL();
         try{
-            bl.save(new File("./klasse.csv"));
+            bl.save(new File("./klasse.bin"));
         } catch(Exception ex)
         {
-            JOptionPane.showMessageDialog(null, "This is a error message!");
+            ex.printStackTrace();
         }
     }
 }

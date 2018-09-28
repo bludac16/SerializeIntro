@@ -1,4 +1,5 @@
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /*
@@ -11,7 +12,7 @@ import java.time.LocalDate;
  *
  * @author David
  */
-public class Schüler {
+public class Schüler implements Serializable{
     private String name;
     private LocalDate birthday;
 

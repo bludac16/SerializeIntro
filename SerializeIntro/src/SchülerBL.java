@@ -1,13 +1,13 @@
 
-import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.AbstractListModel;
 
 /*
@@ -39,15 +39,14 @@ public class SchülerBL extends AbstractListModel{
         oos.flush();
         oos.close();
     }
-    public void load(File f) throws FileNotFoundException, IOException
+    public void load(File f) throws FileNotFoundException, IOException, ClassNotFoundException
     {
-        BufferedReader br = new BufferedReader(new FileReader(f));
-        String line;
-        while((line = br.readLine())!= null)
-        {
-            String[] parts = line.split(";");
-            klasse.add(new Schüler(parts[0], LocalDate.parse(parts[1])));
-        }
+        ObjectInputStream o = new ObjectInputStream( new FileInputStream(f) );
+        String string = (String) o.readObject();
+        Date date     = (Date) o.readObject();
+        
+        System.out.println(string);
+        System.out.println(date);
     }
     public void print()
     {
