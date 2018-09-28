@@ -1,13 +1,12 @@
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.AbstractListModel;
 
@@ -33,15 +32,12 @@ public class SchülerBL extends AbstractListModel{
     
     public void save(File f) throws IOException
     {
-        BufferedWriter bw = new BufferedWriter(new FileWriter(f));
-        for (Schüler s: klasse) {
-            bw.write(s.getName());
-            bw.write(";");
-            bw.write(s.getBirthday().toString());
-            bw.newLine();
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f));
+        for (Schüler s : klasse) {
+            oos.writeObject(s);
         }
-        bw.flush();
-        bw.close();
+        oos.flush();
+        oos.close();
     }
     public void load(File f) throws FileNotFoundException, IOException
     {
@@ -55,7 +51,9 @@ public class SchülerBL extends AbstractListModel{
     }
     public void print()
     {
-       
+        for (Schüler s: klasse) {
+            System.out.format("%s %s\n", s.getName(), s.getBirthday());
+        }
     }
     @Override
     public int getSize() {
