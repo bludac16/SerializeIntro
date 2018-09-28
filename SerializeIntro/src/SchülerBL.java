@@ -55,7 +55,9 @@ public class SchülerBL extends AbstractListModel{
     }
     public void print()
     {
-       
+        for (Schüler s: klasse) {
+            System.out.format("%s %s\n",s.getName(), s.getBirthday());
+        }
     }
     @Override
     public int getSize() {
