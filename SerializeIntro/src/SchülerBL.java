@@ -1,14 +1,13 @@
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.swing.AbstractListModel;
+import java.io.EOFException;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -39,14 +38,20 @@ public class SchülerBL extends AbstractListModel{
         oos.flush();
         oos.close();
     }
-    public void load(File f) throws FileNotFoundException, IOException, ClassNotFoundException
+    public void load(File f) throws Exception
     {
-        ObjectInputStream o = new ObjectInputStream( new FileInputStream(f) );
-        String string = (String) o.readObject();
-        Date date     = (Date) o.readObject();
-        
-        System.out.println(string);
-        System.out.println(date);
+        ObjectInputStream ois = new ObjectInputStream( new FileInputStream(f) );
+        try{
+            Object o ;
+            while ((o = ois.readObject()) != null)
+            {
+                klasse.add((Schüler) o);
+            }
+        } catch (EOFException  eofExc)
+        {
+            
+        }
+        ois.close();
     }
     public void print()
     {
